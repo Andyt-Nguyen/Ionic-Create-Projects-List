@@ -55,6 +55,42 @@ ToDoApp.factory('Projects', function() {
 
 
 ToDoApp.controller('TodoController',['$scope','$timeout','$ionicModal','Projects', '$ionicSideMenuDelegate', function($scope, $timeout, $ionicModal, Projects, $ionicSideMenuDelegate){
+	//Test Data
+	// $scope.tasks = [
+	// 	{title: 'Get Milk'},
+	// 	{title: 'Get More Milk'},
+	// 	{title: 'Walk The Dog'},
+	// 	{title: 'Walk The Milk'}
+	// ];
+
+  $scope.tasks = [];
+
+  // Create and load the Modal
+  $ionicModal.fromTemplateUrl('new-task.html', function(modal) {
+    $scope.taskModal = modal;
+  }, {
+    scope: $scope,
+    animation: 'slide-in-up'
+  });
+
+  // Called when the form is submitted
+  $scope.createTask = function(task) {
+    $scope.tasks.push({
+      title: task.title
+    });
+    $scope.taskModal.hide();
+    task.title = "";
+  };
+
+  // Open our new task modal
+  $scope.newTask = function() {
+    $scope.taskModal.show();
+  };
+
+  // Close the new task modal
+  $scope.closeNewTask = function() {
+    $scope.taskModal.hide();
+  };
 	// A utility function for creating a new project
   // with the given projectTitle
   var createProject = function(projectTitle) {
